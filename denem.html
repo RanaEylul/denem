@@ -3,31 +3,119 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>3D Model Sabit Kamera Testi</title>
+    <title>3D Motor Modeli İnceleme</title>
+
+    <!-- Google Model Viewer Kütüphanesi -->
     <script type="module" src="https://ajax.googleapis.com/ajax/libs/model-viewer/3.5.0/model-viewer.min.js"></script>
+
     <style>
+        * {
+            box-sizing: border-box;
+        }
+
         html, body {
             width: 100%;
             height: 100%;
             margin: 0;
-            background-color: #111;
+            padding: 0;
+            overflow: hidden;
+            font-family: Arial, sans-serif;
+            background-color: #1a1a1a;
         }
+
+        /* Tam Ekran Model Viewer */
         model-viewer {
-            width: 100%;
-            height: 100%;
+            width: 100vw;
+            height: 100vh;
+            background-color: #222222;
+        }
+
+        /* Sol Üst Bilgi Başlığı */
+        .header-title {
+            position: absolute;
+            top: 20px;
+            left: 20px;
+            z-index: 10;
+            background: rgba(0, 0, 0, 0.75);
+            color: white;
+            padding: 12px 20px;
+            border-radius: 8px;
+            box-shadow: 0 4px 10px rgba(0,0,0,0.3);
+            pointer-events: none;
+        }
+
+        .header-title h1 {
+            margin: 0;
+            font-size: 18px;
+        }
+
+        /* Model üzerindeki kırmızı tıklama noktaları */
+        .hotspot-btn {
+            background-color: #ff3b30;
+            color: white;
+            border: 2px solid white;
+            border-radius: 50%;
+            width: 32px;
+            height: 32px;
+            cursor: pointer;
+            font-weight: bold;
+            font-size: 15px;
+            box-shadow: 0 2px 8px rgba(0,0,0,0.5);
+            transition: transform 0.2s, background-color 0.2s;
+        }
+
+        .hotspot-btn:hover {
+            transform: scale(1.3);
+            background-color: #007aff;
         }
     </style>
 </head>
 <body>
 
+    <div class="header-title">
+        <h1>3D Motor Modeli ve Uyarı Noktaları</h1>
+    </div>
+
+    <!-- 3D Model Viewer -->
     <model-viewer 
-        src="engine_3d_model-v1.glb" 
-        alt="Motor Modeli" 
+        id="motor-modeli"
+        src="engine_3d_model.glb" 
+        alt="3D Motor Modeli" 
         camera-controls 
+        auto-rotate 
         shadow-intensity="1"
         environment-image="neutral"
-        camera-orbit="0deg 75deg 5m">
+        bounds="tight"
+        camera-orbit="auto auto auto">
+
+        <!-- 1. Tıklanabilir Nokta (Uyarı Verir) -->
+        <button 
+            class="hotspot-btn" 
+            slot="hotspot-1" 
+            data-position="0m 0.5m 0m" 
+            data-normal="0m 0m 1m"
+            onclick="uyariVer('1 Numaralı Parça: Motor Üst Bloğu Kontrol Edildi!')">
+            1
+        </button>
+
+        <!-- 2. Tıklanabilir Nokta (Uyarı Verir) -->
+        <button 
+            class="hotspot-btn" 
+            slot="hotspot-2" 
+            data-position="0.3m 0.2m 0.3m" 
+            data-normal="0m 1m 0m"
+            onclick="uyariVer('2 Numaralı Parça: Yan Aksam Kontrol Edildi!')">
+            2
+        </button>
+
     </model-viewer>
+
+    <script>
+        // Tıklama uyarısı veren fonksiyon
+        function uyariVer(mesaj) {
+            alert(mesaj);
+        }
+    </script>
 
 </body>
 </html>
